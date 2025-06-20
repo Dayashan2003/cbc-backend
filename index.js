@@ -1,10 +1,9 @@
 import express from "express"
 import mongoose from "mongoose"
 import bodyParser from "body-parser"
-import Student from "./models/student.js"
-import studentRouter from "./routers/studentRouter.js"
 import userRouter from "./routers/userRouter.js"
 import jsonWebToken from "jsonwebtoken"
+import productRouter from "./routers/productRouter.js"
 
 const app = express()
 
@@ -50,10 +49,10 @@ mongoose.connect(connectionString).then(
 )
 
 
+app.use("/api/users", userRouter)
 
-app.use("/students",studentRouter)
+app.use("/api/products", productRouter)
 
-app.use("/users", userRouter)
 
 
 
