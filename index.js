@@ -4,6 +4,8 @@ import bodyParser from "body-parser"
 import userRouter from "./routers/userRouter.js"
 import jsonWebToken from "jsonwebtoken"
 import productRouter from "./routers/productRouter.js"
+import dotenv from "dotenv"
+dotenv.config()
 
 const app = express()
 
@@ -15,7 +17,8 @@ app.use(
         const value = req.header("Authorization")
         if(value!= null){
             const token = value.replace("Bearer ","")
-            jsonWebToken.verify(token, "cbc-6503",
+            jsonWebToken.verify(token, 
+                process.env.JWT_SECRET,
                 (err,decoded)=>{
                     if(decoded == null){
                         res.status(403).json({
@@ -34,7 +37,8 @@ app.use(
     }
 )
 
-const connectionString = "mongodb+srv://admin:1234@cluster0.d0tthbd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+const connectionString = process.env.MONGO_URI
+
 
 
 
